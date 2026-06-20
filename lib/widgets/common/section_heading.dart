@@ -27,7 +27,7 @@ class SectionHeading extends StatelessWidget {
           eyebrow.toUpperCase(),
           textAlign: centered ? TextAlign.center : null,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: AppColors.coral,
+            color: AppColors.primaryTeal,
             letterSpacing: 1.7,
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../config/site_config.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_shadows.dart';
 import '../../core/utils/url_utils.dart';
 import '../../widgets/common/content_width.dart';
 import '../../widgets/common/page_header.dart';
@@ -200,6 +201,7 @@ class _BookingForm extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(color: AppColors.border),
+        boxShadow: AppShadows.soft,
       ),
       child: Form(
         key: formKey,
@@ -322,7 +324,10 @@ class _BookingForm extends StatelessWidget {
               subtitle: consentError
                   ? const Text(
                       'Consent is required',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(
+                        color: AppColors.deepNavy,
+                        fontWeight: FontWeight.w700,
+                      ),
                     )
                   : null,
             ),
@@ -388,7 +393,7 @@ class _BookingAside extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: AppColors.forest,
+        color: AppColors.deepNavy,
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
@@ -440,8 +445,8 @@ class _AsideStep extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.coral,
-            foregroundColor: AppColors.ink,
+            backgroundColor: AppColors.primaryTeal,
+            foregroundColor: AppColors.pureWhite,
             child: Text(
               number,
               style: const TextStyle(fontWeight: FontWeight.w800),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_shadows.dart';
 import '../../data/blog_posts.dart';
 import '../../models/blog_post.dart';
 import '../../widgets/common/content_width.dart';
@@ -66,6 +67,7 @@ class _BlogCard extends StatelessWidget {
             color: AppColors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: AppColors.border),
+            boxShadow: AppShadows.soft,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../config/site_config.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_shadows.dart';
 import '../../widgets/common/content_width.dart';
 import '../../widgets/common/page_header.dart';
 import '../../widgets/common/section_heading.dart';
@@ -45,6 +46,7 @@ class ServicesScreen extends StatelessWidget {
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(color: AppColors.border),
+                            boxShadow: AppShadows.soft,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

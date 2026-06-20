@@ -13,9 +13,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
       children: [
         const PageHeader(
           eyebrow: 'Privacy policy',
-          title: 'How this website handles information',
-          description:
-              'A plain-language overview of the information used when you contact the practice.',
+          title: 'How your information is handled', // MODIFIED
+          description: // MODIFIED
+              'This policy explains what information may be shared when you contact the physiotherapy practice through this website.', // MODIFIED
         ),
         ContentWidth(
           maxWidth: 820,
@@ -27,22 +27,62 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 _section(
                   context,
                   'Information you choose to share',
-                  'The appointment form prepares a WhatsApp message on your device. This website does not submit the form to a database. Information is only shared when you choose to send the message through WhatsApp.',
+                  'When you use the appointment form, you may choose to provide your name, phone or WhatsApp number, email address, consultation preference, location, main concern, preferred appointment time, and additional notes. The form prepares a WhatsApp message on your device and does not submit this information to a website database.', // MODIFIED
                 ),
                 _section(
                   context,
-                  'External services',
-                  'Links may open WhatsApp, your phone app, email app, Instagram, or Google Maps. Those services apply their own privacy policies and terms.',
+                  'How your information may be used', // ADDED
+                  'Information you share may be used to respond to your inquiry, discuss appointment availability, arrange a consultation, provide relevant follow-up communication, or answer questions about physiotherapy services. Your information will not be sold or used for unrelated marketing purposes.', // ADDED
                 ),
                 _section(
                   context,
-                  'Health information',
-                  'Avoid sending emergency or highly sensitive information through the website. Clinical records, where applicable, should be handled according to relevant professional and legal requirements.',
+                  'WhatsApp, email, and other external services', // MODIFIED
+                  'When you choose to send a message, call, email, open Instagram, or view a location, you may be redirected to an external service such as WhatsApp, your phone app, email provider, Instagram, or Google Maps. These services operate independently and apply their own privacy policies, security practices, and terms.', // MODIFIED
+                ),
+                _section(
+                  context,
+                  'Health and sensitive information', // MODIFIED
+                  'Please share only the information reasonably needed to make an appointment or explain your concern. Avoid sending emergency requests, highly sensitive medical records, CNIC details, financial information, or unnecessary personal information through public comments, social media, or unsecured channels.', // MODIFIED
+                ),
+                _section(
+                  context,
+                  'Website hosting and technical information', // ADDED
+                  'Like most websites, the hosting provider may automatically process limited technical information such as device type, browser type, IP address, pages visited, and basic access logs for security, performance, and website operation. This website should not use analytics, advertising pixels, or tracking cookies unless this policy is updated before those tools are enabled.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Cookies and analytics', // ADDED
+                  'This website does not currently use non-essential cookies or advertising tracking tools. If analytics, Meta Pixel, Google Analytics, booking tools, or other tracking services are added in the future, this privacy policy should be updated before launch to explain what is collected and why.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Information retention', // ADDED
+                  'Messages or appointment-related details may be retained only for as long as reasonably necessary for communication, scheduling, patient care, record-keeping, or applicable professional requirements. The exact retention period may depend on the nature of the consultation and any applicable obligations.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Your choices', // ADDED
+                  'You may contact the practice to ask about the information you have shared, request correction of inaccurate details, or request deletion where appropriate. Some information may need to be retained where necessary for legitimate record-keeping, patient care, or legal obligations.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Children and guardians', // ADDED
+                  'If the patient is under 18, a parent or legal guardian should contact the practice and provide appointment information on the patient’s behalf where appropriate.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Security', // ADDED
+                  'Reasonable steps are taken to keep communication and website information secure. However, no internet-based communication method can be guaranteed to be completely secure. Please use appropriate care when sharing personal or health-related information online.', // ADDED
+                ),
+                _section(
+                  context,
+                  'Updates to this policy', // ADDED
+                  'This privacy policy may be updated when website features, communication methods, booking tools, or privacy practices change. The latest version will always be available on this page.', // ADDED
                 ),
                 _section(
                   context,
                   'Contact',
-                  'For a privacy question, email ${SiteConfig.email}. Replace this template with locally reviewed policy wording before launch.',
+                  'For privacy questions, requests, or concerns, contact the practice at ${SiteConfig.email}.', // MODIFIED
                 ),
               ],
             ),

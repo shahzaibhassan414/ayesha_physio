@@ -1,11 +1,15 @@
+import 'dart:async';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../config/site_config.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_shadows.dart';
+import '../../core/utils/home_sections.dart';
 import '../../core/utils/url_utils.dart';
 import '../../data/blog_posts.dart';
 import '../../widgets/common/content_width.dart';
+import '../../widgets/common/clinician_graphic.dart';
 import '../../widgets/common/section_heading.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,17 +18,20 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        _Hero(),
-        _TrustStrip(),
-        _ServicesPreview(),
-        _Approach(),
-        _ConsultationOptions(),
-        _AboutPreview(),
-        _Testimonials(),
-        _Faq(),
-        _BlogPreview(),
-        _FinalCta(),
+      children: [
+        const _Hero(),
+        const _TrustStrip(),
+        KeyedSubtree(
+          key: HomeSections.services,
+          child: const _ServicesPreview(),
+        ),
+        const _Approach(),
+        const _ConsultationOptions(),
+        KeyedSubtree(key: HomeSections.about, child: const _AboutPreview()),
+        const _Testimonials(),
+        const _Faq(),
+        KeyedSubtree(key: HomeSections.blog, child: const _BlogPreview()),
+        const _FinalCta(),
       ],
     );
   }
@@ -36,104 +43,207 @@ class _Hero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.cream,
-      child: ContentWidth(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 54),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final desktop = constraints.maxWidth >= 820;
-              final copy = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.mint,
-                      borderRadius: BorderRadius.circular(99),
-                    ),
-                    child: Text(
-                      'PERSONALIZED PHYSIOTHERAPY CARE',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppColors.forest,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1.1,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  Text(
-                    'Physiotherapist in ${SiteConfig.city} | Pain Relief, Recovery & Better Movement',
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontSize: desktop ? 58 : 42,
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  Text(
-                    'One-to-one support for back pain, neck pain, knee pain, injury recovery, posture, home visits, and online consultations.',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 30),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
+      color: AppColors.offWhite,
+      child: Stack(
+        children: [
+          const Positioned(
+            top: -88,
+            right: -54,
+            child: _OrganicShape(
+              width: 260,
+              height: 210,
+              color: AppColors.softAqua,
+              angle: -.16,
+            ),
+          ),
+          Positioned(
+            left: -92,
+            bottom: 26,
+            child: _OrganicShape(
+              width: 230,
+              height: 150,
+              color: AppColors.primaryTeal.withValues(alpha: .09),
+              angle: .18,
+            ),
+          ),
+          const Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(painter: _MovementLinePainter()),
+            ),
+          ),
+          ContentWidth(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 68),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final desktop = constraints.maxWidth >= 820;
+                  final copy = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton.icon(
-                        onPressed: () => context.go('/book-appointment'),
-                        icon: const Icon(Icons.calendar_month_rounded),
-                        label: const Text('Book an appointment'),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 13,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.softAqua.withValues(alpha: .42),
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        child: Text(
+                          'PERSONALIZED PHYSIOTHERAPY CARE',
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: AppColors.deepNavy,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.1,
+                              ),
+                        ),
                       ),
-                      OutlinedButton.icon(
-                        onPressed: UrlUtils.whatsapp,
-                        icon: const Icon(Icons.chat_bubble_outline_rounded),
-                        label: const Text('Ask on WhatsApp'),
+                      const SizedBox(height: 22),
+                      Text(
+                        'Physiotherapist in ${SiteConfig.city} | Pain Relief, Recovery & Better Movement',
+                        style: Theme.of(context).textTheme.displayLarge
+                            ?.copyWith(fontSize: desktop ? 58 : 42),
+                      ),
+                      const SizedBox(height: 22),
+                      Text(
+                        'One-to-one support for back pain, neck pain, knee pain, injury recovery, posture, home visits, and online consultations.',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 30),
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () => context.go('/book-appointment'),
+                            icon: const Icon(Icons.calendar_month_rounded),
+                            label: const Text('Book an appointment'),
+                          ),
+                          OutlinedButton.icon(
+                            onPressed: UrlUtils.whatsapp,
+                            icon: const Icon(Icons.chat_bubble_outline_rounded),
+                            label: const Text('Ask on WhatsApp'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 28),
+                      Wrap(
+                        spacing: 22,
+                        runSpacing: 10,
+                        children: const [
+                          _MiniTrust(
+                            icon: Icons.favorite_outline_rounded,
+                            text: 'Individual care',
+                          ),
+                          _MiniTrust(
+                            icon: Icons.home_outlined,
+                            text: 'Home visits',
+                          ),
+                          _MiniTrust(
+                            icon: Icons.video_call_outlined,
+                            text: 'Online support',
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 28),
-                  Wrap(
-                    spacing: 22,
-                    runSpacing: 10,
-                    children: const [
-                      _MiniTrust(
-                        icon: Icons.favorite_outline_rounded,
-                        text: 'Individual care',
-                      ),
-                      _MiniTrust(
-                        icon: Icons.home_outlined,
-                        text: 'Home visits',
-                      ),
-                      _MiniTrust(
-                        icon: Icons.video_call_outlined,
-                        text: 'Online support',
-                      ),
+                  );
+                  final visual = const _HeroVisual();
+                  if (!desktop) {
+                    return Column(
+                      children: [copy, const SizedBox(height: 42), visual],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      Expanded(flex: 11, child: copy),
+                      const SizedBox(width: 62),
+                      const Expanded(flex: 9, child: _HeroVisual()),
                     ],
-                  ),
-                ],
-              );
-              final visual = const _HeroVisual();
-              if (!desktop) {
-                return Column(
-                  children: [copy, const SizedBox(height: 42), visual],
-                );
-              }
-              return Row(
-                children: [
-                  Expanded(flex: 11, child: copy),
-                  const SizedBox(width: 62),
-                  const Expanded(flex: 9, child: _HeroVisual()),
-                ],
-              );
-            },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrganicShape extends StatelessWidget {
+  const _OrganicShape({
+    required this.width,
+    required this.height,
+    required this.color,
+    required this.angle,
+  });
+
+  final double width;
+  final double height;
+  final Color color;
+  final double angle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: angle,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(120),
+            topRight: Radius.circular(54),
+            bottomLeft: Radius.circular(68),
+            bottomRight: Radius.circular(130),
           ),
         ),
       ),
     );
   }
+}
+
+class _MovementLinePainter extends CustomPainter {
+  const _MovementLinePainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.deepNavy.withValues(alpha: .12)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4
+      ..strokeCap = StrokeCap.round;
+
+    final topCurve = Path()
+      ..moveTo(size.width * .64, 8)
+      ..cubicTo(
+        size.width * .78,
+        size.height * .08,
+        size.width * .72,
+        size.height * .22,
+        size.width * .94,
+        size.height * .28,
+      );
+    canvas.drawPath(topCurve, paint);
+
+    final lowerCurve = Path()
+      ..moveTo(0, size.height * .78)
+      ..cubicTo(
+        size.width * .14,
+        size.height * .63,
+        size.width * .22,
+        size.height * .92,
+        size.width * .38,
+        size.height * .82,
+      );
+    canvas.drawPath(lowerCurve, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _MiniTrust extends StatelessWidget {
@@ -147,7 +257,7 @@ class _MiniTrust extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 19, color: AppColors.sage),
+        Icon(icon, size: 19, color: AppColors.primaryTeal),
         const SizedBox(width: 7),
         Text(
           text,
@@ -173,7 +283,7 @@ class _HeroVisual extends StatelessWidget {
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.mint,
+                color: AppColors.softAqua.withValues(alpha: .55),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(180),
                   topRight: Radius.circular(180),
@@ -188,19 +298,30 @@ class _HeroVisual extends StatelessWidget {
           Positioned(
             left: -18,
             bottom: 32,
-            child: _FloatingCard(
-              icon: Icons.verified_user_outlined,
-              title: 'Care that fits you',
-              subtitle: 'Clear, practical, personal',
+            child: _FloatingMotion(
+              // ADDED
+              duration: const Duration(milliseconds: 2400), 
+              amplitude: 10, 
+              child: _FloatingCard(
+                icon: Icons.verified_user_outlined,
+                title: 'Care that fits you',
+                subtitle: 'Clear, practical, personal',
+              ),
             ),
           ),
           Positioned(
             right: -10,
             top: 54,
-            child: _FloatingCard(
-              icon: Icons.calendar_today_rounded,
-              title: 'Flexible options',
-              subtitle: 'Clinic · Home · Online',
+            child: _FloatingMotion(
+              
+              duration: const Duration(milliseconds: 2900), 
+              amplitude: 8, 
+              reverseDirection: true, 
+              child: _FloatingCard(
+                icon: Icons.calendar_today_rounded,
+                title: 'Flexible options',
+                subtitle: 'Clinic · Home · Online',
+              ),
             ),
           ),
         ],
@@ -208,6 +329,80 @@ class _HeroVisual extends StatelessWidget {
     );
   }
 }
+
+class _FloatingMotion extends StatefulWidget {
+  
+  const _FloatingMotion({
+    
+    required this.child, 
+    required this.duration, 
+    this.amplitude = 8, 
+    this.reverseDirection = false, 
+  }); 
+
+  final Widget child; 
+  final Duration duration; 
+  final double amplitude; 
+  final bool reverseDirection; 
+
+  @override 
+  State<_FloatingMotion> createState() => _FloatingMotionState(); 
+} 
+
+class _FloatingMotionState
+    extends
+        State<_FloatingMotion> 
+    with SingleTickerProviderStateMixin {
+  
+  late final AnimationController _controller; 
+
+  @override 
+  void initState() {
+    
+    super.initState(); 
+    _controller = AnimationController(
+      
+      vsync: this, 
+      duration: widget.duration, 
+    )..repeat(); 
+  } 
+
+  @override 
+  void dispose() {
+    
+    _controller.dispose(); 
+    super.dispose(); 
+  } 
+
+  @override 
+  Widget build(BuildContext context) {
+    
+    return AnimatedBuilder(
+      
+      animation: _controller, 
+      child: widget.child, 
+      builder: (context, child) {
+        
+        final movement = math.sin(_controller.value * math.pi * 2); 
+        final offset = movement * widget.amplitude; 
+        final rotation = movement * 0.015; 
+
+        return Transform.translate(
+          
+          offset: Offset(
+            0,
+            widget.reverseDirection ? offset : -offset,
+          ), 
+          child: Transform.rotate(
+            
+            angle: widget.reverseDirection ? -rotation : rotation, 
+            child: child, 
+          ), 
+        ); 
+      }, 
+    ); 
+  } 
+} 
 
 class _PersonIllustration extends StatelessWidget {
   const _PersonIllustration();
@@ -221,78 +416,7 @@ class _PersonIllustration extends StatelessWidget {
         bottomLeft: Radius.circular(30),
         bottomRight: Radius.circular(30),
       ),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Positioned(
-            top: 30,
-            left: 34,
-            child: Icon(
-              Icons.eco_rounded,
-              size: 86,
-              color: AppColors.sage.withValues(alpha: .35),
-            ),
-          ),
-          Positioned(
-            top: 110,
-            right: 24,
-            child: Icon(
-              Icons.spa_rounded,
-              size: 70,
-              color: AppColors.sage.withValues(alpha: .28),
-            ),
-          ),
-          Positioned(
-            bottom: -40,
-            child: Container(
-              width: 270,
-              height: 310,
-              decoration: const BoxDecoration(
-                color: AppColors.forest,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(130)),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 205,
-            child: Container(
-              width: 116,
-              height: 116,
-              decoration: const BoxDecoration(
-                color: Color(0xFFD7A07E),
-                shape: BoxShape.circle,
-              ),
-              child: const Align(
-                alignment: Alignment(0, .45),
-                child: Icon(
-                  Icons.sentiment_satisfied_alt_rounded,
-                  color: AppColors.ink,
-                  size: 46,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 284,
-            child: Container(
-              width: 132,
-              height: 66,
-              decoration: const BoxDecoration(
-                color: AppColors.ink,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(90)),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 65,
-            child: Icon(
-              Icons.spa_rounded,
-              size: 54,
-              color: AppColors.white.withValues(alpha: .85),
-            ),
-          ),
-        ],
-      ),
+      child: const ClinicianGraphic(),
     );
   }
 }
@@ -367,7 +491,7 @@ class _TrustStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.forest,
+      color: AppColors.deepNavy,
       child: ContentWidth(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
@@ -477,6 +601,7 @@ class _ServiceCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.border),
+        boxShadow: AppShadows.soft,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -688,6 +813,7 @@ class _OptionCard extends StatelessWidget {
         color: AppColors.white,
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(18),
+        boxShadow: AppShadows.soft,
       ),
       child: Column(
         children: [
@@ -775,65 +901,154 @@ class _SimplePortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: .86,
+      aspectRatio: .95,
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.cream,
-          borderRadius: BorderRadius.circular(180),
+          borderRadius: BorderRadius.circular(90),
         ),
-        child: const _PersonIllustration(),
+        child: Padding(
+          padding: const EdgeInsets.all(22),
+          child: Transform.flip(
+            flipX: true,
+            child: const ClinicianGraphic(compact: true),
+          ),
+        ),
       ),
     );
   }
 }
 
-class _Testimonials extends StatelessWidget {
+class _Testimonials extends StatefulWidget {
   const _Testimonials();
 
   @override
+  State<_Testimonials> createState() => _TestimonialsState();
+}
+
+class _TestimonialsState extends State<_Testimonials> {
+  int _currentIndex = 0;
+  Timer? _testimonialTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  void _startAutoSlide() {
+    if (SiteConfig.testimonials.length <= 1) return;
+
+    _testimonialTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!mounted) return;
+
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % SiteConfig.testimonials.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // ADDED
+    _testimonialTimer?.cancel(); // ADDED
+    super.dispose(); // ADDED
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (SiteConfig.testimonials.isEmpty) {
+      // ADDED
+      return const SizedBox.shrink();
+    }
+
+    final testimonial = SiteConfig.testimonials[_currentIndex];
+
     return ContentWidth(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 88),
         child: Column(
           children: [
             const SectionHeading(
-              eyebrow: 'Patient stories',
-              title: 'Real feedback belongs here',
+              eyebrow: 'Patient feedback',
+              title: 'What patients shared',
               description:
-                  'Testimonials should only be published with permission. This production-safe placeholder avoids inventing reviews.',
+                  'Hear from patients who felt supported with clear guidance, personalised care, and confidence throughout their recovery journey.',
               centered: true,
             ),
             const SizedBox(height: 34),
-            Container(
-              constraints: const BoxConstraints(maxWidth: 720),
-              padding: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                border: Border.all(color: AppColors.border),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.format_quote_rounded,
-                    color: AppColors.coral,
-                    size: 42,
-                  ),
-                  Text(
-                    SiteConfig.testimonials.first.quote,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.ink,
-                      fontStyle: FontStyle.italic,
+            ClipRect(
+              clipBehavior: Clip.none,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                transitionBuilder: (child, animation) {
+                  final slideAnimation = Tween<Offset>(
+                    begin: const Offset(0.12, 0),
+                    end: Offset.zero,
+                  ).animate(animation);
+
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: slideAnimation,
+                      child: child,
                     ),
+                  );
+                },
+                child: Container(
+                  key: ValueKey(_currentIndex),
+                  constraints: const BoxConstraints(maxWidth: 720),
+                  padding: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    border: Border.all(color: AppColors.border),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: AppShadows.soft,
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    SiteConfig.testimonials.first.attribution,
-                    style: Theme.of(context).textTheme.labelLarge,
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.format_quote_rounded,
+                        color: AppColors.coral,
+                        size: 42,
+                      ),
+                      Text(
+                        testimonial.quote,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.ink,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        testimonial.attribution,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 22),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                SiteConfig.testimonials.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: index == _currentIndex ? 22 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: index == _currentIndex
+                        ? AppColors.coral
+                        : AppColors.border,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
               ),
             ),
           ],
@@ -867,16 +1082,33 @@ class _Faq extends StatelessWidget {
                   color: AppColors.white,
                   elevation: 0,
                   margin: const EdgeInsets.only(bottom: 12),
+                  clipBehavior: Clip.antiAlias, // ADDED
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(color: AppColors.border),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: ExpansionTile(
+                    shape: RoundedRectangleBorder( // ADDED
+                      borderRadius: BorderRadius.circular(14), // ADDED
+                      side: BorderSide.none, // ADDED
+                    ), // ADDED
+                    collapsedShape: RoundedRectangleBorder( // ADDED
+                      borderRadius: BorderRadius.circular(14), // ADDED
+                      side: BorderSide.none, // ADDED
+                    ), // ADDED
+                    backgroundColor: Colors.transparent, // ADDED
+                    collapsedBackgroundColor: Colors.transparent, // ADDED
                     tilePadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 5,
                     ),
-                    childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    childrenPadding: const EdgeInsets.fromLTRB(
+                      20,
+                      0,
+                      20,
+                      20,
+                    ),
+                    collapsedIconColor: AppColors.ink, // ADDED
                     title: Text(
                       faq.question,
                       style: Theme.of(context).textTheme.titleMedium,
@@ -967,6 +1199,7 @@ class _ArticleCard extends StatelessWidget {
           color: AppColors.white,
           border: Border.all(color: AppColors.border),
           borderRadius: BorderRadius.circular(18),
+          boxShadow: AppShadows.soft,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1025,7 +1258,7 @@ class _FinalCta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.coral,
+      color: AppColors.recoveryAqua.withValues(alpha: .08),
       child: ContentWidth(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 62),
@@ -1036,7 +1269,7 @@ class _FinalCta extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(
                   context,
-                ).textTheme.headlineLarge?.copyWith(color: AppColors.ink),
+                ).textTheme.headlineLarge?.copyWith(color: AppColors.deepNavy),
               ),
               const SizedBox(height: 14),
               Text(
@@ -1044,7 +1277,7 @@ class _FinalCta extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge?.copyWith(color: AppColors.ink),
+                ).textTheme.bodyLarge?.copyWith(color: AppColors.mutedGrey),
               ),
               const SizedBox(height: 26),
               ElevatedButton.icon(

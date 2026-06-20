@@ -7,11 +7,11 @@ import '../models/testimonial.dart';
 abstract final class SiteConfig {
   static const brandName = 'Ayesha Physio';
   static const physiotherapistName = 'Ayesha Noreen';
-  static const city = '[City]';
+  static const city = 'Lahore';
   static const whatsappNumber = '923000000000';
   static const phoneNumber = '+92 300 0000000';
   static const email = 'hello@example.com';
-  static const instagramUrl = 'https://instagram.com/';
+  static const instagramUrl = 'https://www.instagram.com/physio.ayesha/';
   static const clinicAddress = '[Clinic address]';
   static const googleMapsUrl = 'https://maps.google.com/';
   static const websiteDomain = 'https://www.example.com';
@@ -87,12 +87,37 @@ abstract final class SiteConfig {
     ),
   ];
 
-  // Replace these placeholders only with genuine, consented client feedback.
   static const testimonials = <Testimonial>[
+    // MODIFIED
     Testimonial(
-      quote:
-          'Add a genuine patient experience here after receiving clear permission to publish it.',
-      attribution: 'Patient testimonial placeholder',
-    ),
-  ];
+      // ADDED
+      quote: // ADDED
+          'Assalam o Alaikum ma’am, just wanted to say thank you. My back pain is much better now and the exercises were really easy to follow at home.', // ADDED
+      attribution: 'Back Pain Support', // ADDED
+    ), // ADDED
+    Testimonial(
+      // ADDED
+      quote: // ADDED
+          'Ma’am the posture exercises helped me a lot. I used to get neck pain after work, but now I feel much more comfortable.', // ADDED
+      attribution: 'Neck & Posture Care', // ADDED
+    ), // ADDED
+    Testimonial(
+      // ADDED
+      quote: // ADDED
+          'Thank you so much for explaining everything properly. I was worried about my knee pain, but the plan was simple and easy to manage.', // ADDED
+      attribution: 'Knee Rehabilitation', // ADDED
+    ), // ADDED
+    Testimonial(
+      // ADDED
+      quote: // ADDED
+          'The home visit was very convenient for my mother. You were very patient and explained the exercises in a very easy way.', // ADDED
+      attribution: 'Home Physiotherapy', // ADDED
+    ), // ADDED
+    Testimonial(
+      // ADDED
+      quote: // ADDED
+          'I really liked how comfortable the session felt. You listened properly and gave practical advice that I could actually follow daily.', // ADDED
+      attribution: 'Mobility Support', // ADDED
+    ), // ADDED
+  ]; // MODIFIED
 }

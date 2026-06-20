@@ -206,7 +206,9 @@ class _ArticleCta extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: accent ? AppColors.forest : AppColors.mint,
+        color: accent
+            ? AppColors.primaryNavy
+            : AppColors.softAqua.withValues(alpha: .42),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Wrap(
@@ -225,8 +227,8 @@ class _ArticleCta extends StatelessWidget {
               ? ElevatedButton(
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.coral,
-                    foregroundColor: AppColors.ink,
+                    backgroundColor: AppColors.primaryTeal,
+                    foregroundColor: AppColors.pureWhite,
                   ),
                   child: Text(buttonLabel),
                 )

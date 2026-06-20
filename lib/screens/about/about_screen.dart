@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../config/site_config.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_shadows.dart';
 import '../../widgets/common/content_width.dart';
+import '../../widgets/common/clinician_graphic.dart';
 import '../../widgets/common/page_header.dart';
 import '../../widgets/common/section_heading.dart';
 
@@ -32,28 +34,9 @@ class AboutScreen extends StatelessWidget {
                     color: AppColors.mint,
                     borderRadius: BorderRadius.circular(28),
                   ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(
-                        Icons.spa_rounded,
-                        size: 190,
-                        color: AppColors.sage.withValues(alpha: .2),
-                      ),
-                      Container(
-                        width: 190,
-                        height: 190,
-                        decoration: const BoxDecoration(
-                          color: AppColors.forest,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.person_rounded,
-                          size: 120,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
+                  child: const Padding(
+                    padding: EdgeInsets.all(34),
+                    child: ClinicianGraphic(),
                   ),
                 );
                 final copy = Column(
@@ -202,6 +185,7 @@ class _ValueCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border),
+        boxShadow: AppShadows.soft,
       ),
       child: Column(
         children: [
