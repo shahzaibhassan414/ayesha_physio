@@ -43,7 +43,7 @@ class AboutScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SectionHeading(
-                      eyebrow: 'Ayesha Noreen',
+                      eyebrow: 'Dr. Ayesha Noreen',
                       title: 'Care should make sense to you',
                       description:
                           'My aim is to create a respectful space where you can explain what you are experiencing, ask questions, and understand the purpose behind each step of your plan.',

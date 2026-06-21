@@ -8,7 +8,7 @@ class AyeshaPhysioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Ayesha Noreen | Physiotherapist',
+      title: 'Physiotherapist in Lahore | GOPT by Dr. Ayesha',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       routerConfig: appRouter,

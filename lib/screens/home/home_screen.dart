@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
           key: HomeSections.services,
           child: const _ServicesPreview(),
         ),
+        const _LocalSearchSection(),
         const _Approach(),
         const _ConsultationOptions(),
         KeyedSubtree(key: HomeSections.about, child: const _AboutPreview()),
@@ -33,6 +34,129 @@ class HomeScreen extends StatelessWidget {
         KeyedSubtree(key: HomeSections.blog, child: const _BlogPreview()),
         const _FinalCta(),
       ],
+    );
+  }
+}
+
+class _LocalSearchSection extends StatelessWidget {
+  const _LocalSearchSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: AppColors.softAqua.withValues(alpha: .24),
+      child: ContentWidth(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 76),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final desktop = constraints.maxWidth >= 780;
+              final copy = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SectionHeading(
+                    eyebrow: 'Local physiotherapy care',
+                    title: 'Looking for a physiotherapist near you in Lahore?',
+                    description:
+                        'GOPT by Dr. Ayesha offers personalized physiotherapy support in Lahore, with clinic consultations, suitable home visits, and online follow-up options.',
+                  ),
+                  const SizedBox(height: 22),
+                  Text(
+                    'Support is available for suitable back pain, neck pain, knee pain, posture concerns, frozen shoulder, sports injury rehabilitation, mobility, and recovery goals.',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 26),
+                  ElevatedButton.icon(
+                    onPressed: () => context.go('/book-appointment'),
+                    icon: const Icon(Icons.location_on_outlined),
+                    label: const Text('Ask about availability in Lahore'),
+                  ),
+                ],
+              );
+              const checklist = Column(
+                children: [
+                  _LocalTrustPoint(
+                    Icons.fact_check_outlined,
+                    'Individual assessment',
+                    'Care starts with your symptoms, movement, health history, and goals.',
+                  ),
+                  _LocalTrustPoint(
+                    Icons.route_outlined,
+                    'Clear recovery plan',
+                    'Understand what to do, why it matters, and how progress will be reviewed.',
+                  ),
+                  _LocalTrustPoint(
+                    Icons.home_work_outlined,
+                    'Flexible consultation options',
+                    'Choose clinic, available home physiotherapy, or online support.',
+                  ),
+                ],
+              );
+
+              return desktop
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(flex: 6, child: copy),
+                        const SizedBox(width: 64),
+                        const Expanded(flex: 5, child: checklist),
+                      ],
+                    )
+                  : Column(
+                      children: [copy, const SizedBox(height: 38), checklist],
+                    );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LocalTrustPoint extends StatelessWidget {
+  const _LocalTrustPoint(this.icon, this.title, this.description);
+
+  final IconData icon;
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              color: AppColors.offWhite,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: AppColors.primaryTeal, size: 22),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 5),
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -300,8 +424,8 @@ class _HeroVisual extends StatelessWidget {
             bottom: 32,
             child: _FloatingMotion(
               // ADDED
-              duration: const Duration(milliseconds: 2400), 
-              amplitude: 10, 
+              duration: const Duration(milliseconds: 2400),
+              amplitude: 10,
               child: _FloatingCard(
                 icon: Icons.verified_user_outlined,
                 title: 'Care that fits you',
@@ -313,10 +437,9 @@ class _HeroVisual extends StatelessWidget {
             right: -10,
             top: 54,
             child: _FloatingMotion(
-              
-              duration: const Duration(milliseconds: 2900), 
-              amplitude: 8, 
-              reverseDirection: true, 
+              duration: const Duration(milliseconds: 2900),
+              amplitude: 8,
+              reverseDirection: true,
               child: _FloatingCard(
                 icon: Icons.calendar_today_rounded,
                 title: 'Flexible options',
@@ -331,78 +454,60 @@ class _HeroVisual extends StatelessWidget {
 }
 
 class _FloatingMotion extends StatefulWidget {
-  
   const _FloatingMotion({
-    
-    required this.child, 
-    required this.duration, 
-    this.amplitude = 8, 
-    this.reverseDirection = false, 
-  }); 
+    required this.child,
+    required this.duration,
+    this.amplitude = 8,
+    this.reverseDirection = false,
+  });
 
-  final Widget child; 
-  final Duration duration; 
-  final double amplitude; 
-  final bool reverseDirection; 
+  final Widget child;
+  final Duration duration;
+  final double amplitude;
+  final bool reverseDirection;
 
-  @override 
-  State<_FloatingMotion> createState() => _FloatingMotionState(); 
-} 
+  @override
+  State<_FloatingMotion> createState() => _FloatingMotionState();
+}
 
-class _FloatingMotionState
-    extends
-        State<_FloatingMotion> 
+class _FloatingMotionState extends State<_FloatingMotion>
     with SingleTickerProviderStateMixin {
-  
-  late final AnimationController _controller; 
+  late final AnimationController _controller;
 
-  @override 
+  @override
   void initState() {
-    
-    super.initState(); 
-    _controller = AnimationController(
-      
-      vsync: this, 
-      duration: widget.duration, 
-    )..repeat(); 
-  } 
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..repeat();
+  }
 
-  @override 
+  @override
   void dispose() {
-    
-    _controller.dispose(); 
-    super.dispose(); 
-  } 
+    _controller.dispose();
+    super.dispose();
+  }
 
-  @override 
+  @override
   Widget build(BuildContext context) {
-    
     return AnimatedBuilder(
-      
-      animation: _controller, 
-      child: widget.child, 
+      animation: _controller,
+      child: widget.child,
       builder: (context, child) {
-        
-        final movement = math.sin(_controller.value * math.pi * 2); 
-        final offset = movement * widget.amplitude; 
-        final rotation = movement * 0.015; 
+        final movement = math.sin(_controller.value * math.pi * 2);
+        final offset = movement * widget.amplitude;
+        final rotation = movement * 0.015;
 
         return Transform.translate(
-          
-          offset: Offset(
-            0,
-            widget.reverseDirection ? offset : -offset,
-          ), 
+          offset: Offset(0, widget.reverseDirection ? offset : -offset),
           child: Transform.rotate(
-            
-            angle: widget.reverseDirection ? -rotation : rotation, 
-            child: child, 
-          ), 
-        ); 
-      }, 
-    ); 
-  } 
-} 
+            angle: widget.reverseDirection ? -rotation : rotation,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+}
 
 class _PersonIllustration extends StatelessWidget {
   const _PersonIllustration();
@@ -948,112 +1053,208 @@ class _TestimonialsState extends State<_Testimonials> {
     });
   }
 
+  void _showPrevious() {
+    setState(() {
+      _currentIndex =
+          (_currentIndex - 1 + SiteConfig.testimonials.length) %
+          SiteConfig.testimonials.length;
+    });
+  }
+
+  void _showNext() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % SiteConfig.testimonials.length;
+    });
+  }
+
   @override
   void dispose() {
-    // ADDED
-    _testimonialTimer?.cancel(); // ADDED
-    super.dispose(); // ADDED
+    _testimonialTimer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (SiteConfig.testimonials.isEmpty) {
-      // ADDED
       return const SizedBox.shrink();
     }
 
     final testimonial = SiteConfig.testimonials[_currentIndex];
 
-    return ContentWidth(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 88),
-        child: Column(
-          children: [
-            const SectionHeading(
-              eyebrow: 'Patient feedback',
-              title: 'What patients shared',
-              description:
-                  'Hear from patients who felt supported with clear guidance, personalised care, and confidence throughout their recovery journey.',
-              centered: true,
-            ),
-            const SizedBox(height: 34),
-            ClipRect(
-              clipBehavior: Clip.none,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
-                switchInCurve: Curves.easeOutCubic,
-                switchOutCurve: Curves.easeInCubic,
-                transitionBuilder: (child, animation) {
-                  final slideAnimation = Tween<Offset>(
-                    begin: const Offset(0.12, 0),
-                    end: Offset.zero,
-                  ).animate(animation);
-
-                  return FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(
-                      position: slideAnimation,
-                      child: child,
+    return ColoredBox(
+      color: AppColors.softAqua.withValues(alpha: .25),
+      child: ContentWidth(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 88),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final desktop = constraints.maxWidth >= 780;
+              final heading = const SectionHeading(
+                eyebrow: 'Patient feedback',
+                title: 'Care that feels clear and supportive',
+                description:
+                    'A few words shared about the experience of receiving practical, personalised physiotherapy support.',
+              );
+              final testimonialCard = Container(
+                padding: EdgeInsets.all(desktop ? 38 : 24),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  border: Border.all(color: AppColors.border),
+                  borderRadius: BorderRadius.circular(28),
+                  boxShadow: AppShadows.soft,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 7,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.softAqua.withValues(alpha: .38),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(
+                            testimonial.attribution.toUpperCase(),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: AppColors.deepNavy,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: .7,
+                                ),
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${(_currentIndex + 1).toString().padLeft(2, '0')} / '
+                          '${SiteConfig.testimonials.length.toString().padLeft(2, '0')}',
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(color: AppColors.muted),
+                        ),
+                      ],
                     ),
-                  );
-                },
-                child: Container(
-                  key: ValueKey(_currentIndex),
-                  constraints: const BoxConstraints(maxWidth: 720),
-                  padding: const EdgeInsets.all(30),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    border: Border.all(color: AppColors.border),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: AppShadows.soft,
-                  ),
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.format_quote_rounded,
-                        color: AppColors.coral,
-                        size: 42,
-                      ),
-                      Text(
-                        testimonial.quote,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.ink,
-                          fontStyle: FontStyle.italic,
+                    const SizedBox(height: 28),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 320),
+                      switchInCurve: Curves.easeOut,
+                      switchOutCurve: Curves.easeIn,
+                      child: Text(
+                        '“${testimonial.quote}”',
+                        key: ValueKey(_currentIndex),
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: AppColors.deepNavy,
+                          fontSize: desktop ? 24 : 20,
+                          height: 1.55,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        testimonial.attribution,
-                        style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        Container(
+                          width: 42,
+                          height: 42,
+                          decoration: const BoxDecoration(
+                            color: AppColors.deepNavy,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.favorite_outline_rounded,
+                            color: AppColors.white,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'Shared after physiotherapy support',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        _TestimonialControl(
+                          tooltip: 'Previous feedback',
+                          icon: Icons.arrow_back_rounded,
+                          onPressed: _showPrevious,
+                        ),
+                        const SizedBox(width: 8),
+                        _TestimonialControl(
+                          tooltip: 'Next feedback',
+                          icon: Icons.arrow_forward_rounded,
+                          onPressed: _showNext,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(99),
+                      child: LinearProgressIndicator(
+                        value:
+                            (_currentIndex + 1) /
+                            SiteConfig.testimonials.length,
+                        minHeight: 4,
+                        backgroundColor: AppColors.border,
+                        color: AppColors.primaryTeal,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            const SizedBox(height: 22),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                SiteConfig.testimonials.length,
-                (index) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: index == _currentIndex ? 22 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: index == _currentIndex
-                        ? AppColors.coral
-                        : AppColors.border,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ),
-          ],
+              );
+
+              if (!desktop) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    heading,
+                    const SizedBox(height: 34),
+                    testimonialCard,
+                  ],
+                );
+              }
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(flex: 4, child: heading),
+                  const SizedBox(width: 64),
+                  Expanded(flex: 6, child: testimonialCard),
+                ],
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _TestimonialControl extends StatelessWidget {
+  const _TestimonialControl({
+    required this.tooltip,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  final String tooltip;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      tooltip: tooltip,
+      style: IconButton.styleFrom(
+        foregroundColor: AppColors.deepNavy,
+        backgroundColor: AppColors.offWhite,
+        side: const BorderSide(color: AppColors.border),
+      ),
+      icon: Icon(icon, size: 20),
     );
   }
 }
@@ -1088,11 +1289,13 @@ class _Faq extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: ExpansionTile(
-                    shape: RoundedRectangleBorder( // ADDED
+                    shape: RoundedRectangleBorder(
+                      // ADDED
                       borderRadius: BorderRadius.circular(14), // ADDED
                       side: BorderSide.none, // ADDED
                     ), // ADDED
-                    collapsedShape: RoundedRectangleBorder( // ADDED
+                    collapsedShape: RoundedRectangleBorder(
+                      // ADDED
                       borderRadius: BorderRadius.circular(14), // ADDED
                       side: BorderSide.none, // ADDED
                     ), // ADDED
@@ -1102,12 +1305,7 @@ class _Faq extends StatelessWidget {
                       horizontal: 20,
                       vertical: 5,
                     ),
-                    childrenPadding: const EdgeInsets.fromLTRB(
-                      20,
-                      0,
-                      20,
-                      20,
-                    ),
+                    childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                     collapsedIconColor: AppColors.ink, // ADDED
                     title: Text(
                       faq.question,

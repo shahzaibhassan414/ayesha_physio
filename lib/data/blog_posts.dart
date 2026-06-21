@@ -6,7 +6,7 @@ final blogPosts = <BlogPost>[
     slug: 'when-to-see-physiotherapist-for-back-pain',
     summary:
         'A practical guide to common back-pain patterns, useful first steps, and signs that deserve prompt medical attention.',
-    author: 'Ayesha Noreen',
+    author: 'Dr. Ayesha Noreen',
     publishedDate: DateTime(2026, 1, 12),
     readingTime: '6 min read',
     featuredImage: 'back-care',
@@ -51,7 +51,7 @@ final blogPosts = <BlogPost>[
     slug: 'neck-pain-mobile-use-posture-tips',
     summary:
         'Simple ways to reduce prolonged strain during phone use without chasing a “perfect” posture.',
-    author: 'Ayesha Noreen',
+    author: 'Dr. Ayesha Noreen',
     publishedDate: DateTime(2026, 1, 28),
     readingTime: '5 min read',
     featuredImage: 'neck-posture',
@@ -95,7 +95,7 @@ final blogPosts = <BlogPost>[
     slug: 'knee-pain-when-physiotherapy-may-help',
     summary:
         'How physiotherapy can support knee movement and strength, plus situations that need medical review.',
-    author: 'Ayesha Noreen',
+    author: 'Dr. Ayesha Noreen',
     publishedDate: DateTime(2026, 2, 10),
     readingTime: '5 min read',
     featuredImage: 'knee-mobility',
@@ -140,7 +140,7 @@ final blogPosts = <BlogPost>[
     slug: 'home-vs-clinic-physiotherapy',
     summary:
         'Compare convenience, equipment, privacy, mobility needs, and goals when choosing where to have physiotherapy.',
-    author: 'Ayesha Noreen',
+    author: 'Dr. Ayesha Noreen',
     publishedDate: DateTime(2026, 2, 24),
     readingTime: '6 min read',
     featuredImage: 'home-clinic',

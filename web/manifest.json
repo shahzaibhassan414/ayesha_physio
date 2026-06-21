@@ -1,11 +1,11 @@
 {
-  "name": "Ayesha Physio",
-  "short_name": "Ayesha Physio",
+  "name": "GOPT by Dr. Ayesha",
+  "short_name": "GOPT",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F4FAFA",
   "theme_color": "#082F49",
-  "description": "Personalized physiotherapy support for movement, pain, and recovery.",
+  "description": "Personalized physiotherapy in Lahore for pain relief, mobility, posture, injury recovery, home visits and online consultations.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [

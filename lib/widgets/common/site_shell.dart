@@ -508,16 +508,7 @@ class _FooterLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => onNavigate(path),
-      style: TextButton.styleFrom(
-        foregroundColor: AppColors.white.withValues(alpha: .7),
-        alignment: Alignment.centerLeft,
-        minimumSize: const Size(0, 42),
-        padding: const EdgeInsets.symmetric(vertical: 7),
-      ),
-      child: Text(label),
-    );
+    return _FooterHoverLink(label: label, onTap: () => onNavigate(path));
   }
 }
 
@@ -529,15 +520,48 @@ class _FooterAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        foregroundColor: AppColors.white.withValues(alpha: .7),
-        alignment: Alignment.centerLeft,
-        minimumSize: const Size(0, 42),
-        padding: const EdgeInsets.symmetric(vertical: 7),
+    return _FooterHoverLink(label: label, onTap: onPressed);
+  }
+}
+
+class _FooterHoverLink extends StatefulWidget {
+  const _FooterHoverLink({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  State<_FooterHoverLink> createState() => _FooterHoverLinkState();
+}
+
+class _FooterHoverLinkState extends State<_FooterHoverLink> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: Semantics(
+        button: true,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          behavior: HitTestBehavior.opaque,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 160),
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: _hovered
+                    ? AppColors.softAqua
+                    : AppColors.white.withValues(alpha: .7),
+              ),
+              child: Text(widget.label),
+            ),
+          ),
+        ),
       ),
-      child: Text(label),
     );
   }
 }

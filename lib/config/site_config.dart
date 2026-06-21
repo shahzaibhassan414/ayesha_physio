@@ -5,8 +5,8 @@ import '../models/service.dart';
 import '../models/testimonial.dart';
 
 abstract final class SiteConfig {
-  static const brandName = 'Ayesha Physio';
-  static const physiotherapistName = 'Ayesha Noreen';
+  static const brandName = 'GOPT by Dr. Ayesha';
+  static const physiotherapistName = 'Dr. Ayesha Noreen';
   static const city = 'Lahore';
   static const whatsappNumber = '923000000000';
   static const phoneNumber = '+92 300 0000000';
@@ -14,7 +14,7 @@ abstract final class SiteConfig {
   static const instagramUrl = 'https://www.instagram.com/physio.ayesha/';
   static const clinicAddress = '[Clinic address]';
   static const googleMapsUrl = 'https://maps.google.com/';
-  static const websiteDomain = 'https://www.example.com';
+  static const websiteDomain = 'https://ayesha-physio.vercel.app';
   static const clinicTimings = 'Monday–Saturday · By appointment';
   static const serviceAreas = <String>['[Area 1]', '[Area 2]', '[Area 3]'];
   static const qualifications = <String>['[Qualification]'];
@@ -84,6 +84,16 @@ abstract final class SiteConfig {
       question: 'Can I book an online consultation?',
       answer:
           'Yes. Online physiotherapy consultations are available in Pakistan for education, movement guidance, and suitable follow-up support.',
+    ),
+    FaqItem(
+      question: 'How do I choose the best physiotherapist near me in Lahore?',
+      answer:
+          'Look for relevant qualifications, clear communication, an individual assessment, realistic recovery guidance, and a consultation option you can attend consistently. The right physiotherapist should explain your plan, answer questions, and refer you for medical review when appropriate.',
+    ),
+    FaqItem(
+      question: 'What conditions can a physiotherapist in Lahore help with?',
+      answer:
+          'Physiotherapy may support suitable cases of back pain, neck pain, knee pain, posture concerns, frozen shoulder, sports injuries, mobility limitations, and recovery after a period of reduced activity. An assessment is needed to decide what is appropriate for you.',
     ),
   ];
 

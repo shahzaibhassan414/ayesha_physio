@@ -69,59 +69,64 @@ class _BlogCard extends StatelessWidget {
             border: Border.all(color: AppColors.border),
             boxShadow: AppShadows.soft,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                width: 112,
-                decoration: const BoxDecoration(
-                  color: AppColors.mint,
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(19),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: 112,
+                  decoration: const BoxDecoration(
+                    color: AppColors.mint,
+                    borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(19),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.menu_book_rounded,
+                      color: AppColors.forest,
+                      size: 38,
+                    ),
                   ),
                 ),
-                child: const Icon(
-                  Icons.menu_book_rounded,
-                  color: AppColors.forest,
-                  size: 38,
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(22),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        post.category.toUpperCase(),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: AppColors.coral,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: .7,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(22),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          post.category.toUpperCase(),
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: AppColors.coral,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: .7,
+                              ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        post.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        post.summary,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 13),
-                      Text(
-                        '${post.readingTime}  ·  ${post.author}',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          post.title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          post.summary,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const SizedBox(height: 13),
+                        Text(
+                          '${post.readingTime}  ·  ${post.author}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,4 @@
-# Ayesha Physio — Flutter Web
+# GOPT by Dr. Ayesha — Flutter Web
 
 A responsive, mobile-first physiotherapy practice website built with Flutter Web, Material 3, `go_router`, and `url_launcher`.
 
@@ -42,7 +42,7 @@ Flutter renders most visible content dynamically, so this project provides the s
 Before launch:
 
 1. Update titles, descriptions, canonical URL, Open Graph values, Twitter metadata, and JSON-LD placeholders in `web/index.html`.
-2. Replace every `https://www.example.com` URL in `web/sitemap.xml` and `web/robots.txt`.
+2. Update the production domain in `web/sitemap.xml` and `web/robots.txt` if it changes.
 3. Replace the default favicon and PWA icons in `web/`.
 4. Add a real social sharing image and update the `og:image` and `twitter:image` URLs.
 5. Validate structured data with Google Rich Results Test.
